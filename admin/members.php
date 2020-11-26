@@ -4,9 +4,56 @@ if (isset($_SESSION['username'])) {
     include 'init.php';
     $do = isset($_GET['do']) ? $_GET['do'] : 'manage';
 
-    if ($do == 'manage') {
+    if ($do == 'manage') {  ?>
 
-        echo '<a href="members.php?do=add">Add New Member</a>';
+        <h1 class="text-center">Manage Members </h1>
+
+    <div class="container">    
+        <table class="table .table-responsive text-center table-bordered">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Control</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>@mdo</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>
+                <a class="btn btn-success" href="">Edit</a>
+                <a class="btn btn-danger" href="">Delete</a>
+            </td>
+            </tr>
+            <tr>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>@mdo</td>
+            <td>
+                <a class="btn btn-success" href="">Edit</a>
+                <a class="btn btn-danger" href="">Delete</a>
+            </td>
+            </tr>
+            <tr>
+            <td>@mdo</td>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+            <td>
+                <a class="btn btn-success" href="">Edit</a>
+                <a class="btn btn-danger" href="">Delete</a>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </div> 
+<?php
 
     }elseif ($do == 'add') { //ADD Members?>
        
