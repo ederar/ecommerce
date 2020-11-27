@@ -1,12 +1,24 @@
-let passField = document.querySelector('.pass');
-let showPassIcon = document.querySelector('.show-pass');
-
-
-showPassIcon.addEventListener("mouseover", function () {
-    passField.setAttribute('type','text');
+window.addEventListener("load", function () {
+  let showPassIcon = document.querySelector(".show-pass");
+  showPassIcon.addEventListener("mouseover", moseOver);
+  showPassIcon.addEventListener("mouseout", moseOut);
 });
 
-showPassIcon.addEventListener("mouseout", function () {
-    passField.setAttribute('type','password');
-});
+function moseOver() {
+    let passField = document.querySelector(".pass");
+    passField.setAttribute("type", "text");
+};
+
+function moseOut() {
+    let passField = document.querySelector(".pass");
+    passField.setAttribute("type", "password");
+}
+
+
+function confirmDelete() {
+    let deleteBtn = document.querySelector(".confirm");
+    deleteBtn.addEventListener("click", confirmDelete);
+    confirm("Are You Sure ?");
+}
+
 
