@@ -1,26 +1,63 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #17a2b8;
-    height: 100vh;
-  }
-  #login .container #login-row #login-column #login-box {
-    margin-top: 120px;
-    max-width: 600px;
-    height: 320px;
-    border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
-  }
-  #login .container #login-row #login-column #login-box #login-form {
-    padding: 20px;
-  }
-  #login .container #login-row #login-column #login-box #login-form #register-link {
-    margin-top: -85px;
-  }
+  margin: 0;
+  padding: 0;
+  background-color: #17a2b8;
+  height: 100vh;
+}
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 600px;
+  height: 320px;
+  border: 1px solid #9c9c9c;
+  background-color: #eaeaea;
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login
+  .container
+  #login-row
+  #login-column
+  #login-box
+  #login-form
+  #register-link {
+  margin-top: -85px;
+}
 
+.show-pass {
+  position: absolute;
+  right: 28px;
+  top: 5px;
+}
 
-  .show-pass {
-    position: absolute;
-    right: 28px;
-    top: 5px;
-  }
+/* DashBoard Styling Start */
+
+.dash h1 {
+  font-size: 40px;
+  padding: 10px 0px;
+}
+
+.dash .stats {
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #b8de6f;
+  padding: 30px;
+  margin-bottom: 10px;
+}
+
+.dash .stats span {
+  display: block;
+  font-size: 40px;
+}
+.dash .stats span a{
+  color: black;
+  text-decoration: none;
+}
+
+.latest {
+  margin-top: 20px;
+}
+.latest .card {
+  margin-bottom: 10px;
+}
+/* DashBoard Styling Start */

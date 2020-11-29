@@ -5,11 +5,17 @@ if (isset($_SESSION['username'])) {
     $do = isset($_GET['do']) ? $_GET['do'] : 'manage';
 
     if ($do == 'manage') {
-        // Select Users From DATABASE 
-        $stmt = $conn->prepare("SELECT * FROM users WHERE GroupID != 1 ");
+
+        $query = '';
+        if (isset($_GET['page']) && $_GET['page'] == 'pending') {
+
+            $query = 'AND RegStatus = 0';
+        }
+
+         // Select Users From DATABASE 
+        $stmt = $conn->prepare("SELECT * FROM users WHERE GroupID != 1 $query");
         $stmt->execute();
         $rows = $stmt->fetchAll();
-
 
 
 ?>
@@ -24,6 +30,7 @@ if (isset($_SESSION['username'])) {
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Full Name</th>
+                        <th scope="col">Registre Date</th>
                         <th scope="col">Control</th>
                     </tr>
                 </thead>
@@ -36,9 +43,16 @@ if (isset($_SESSION['username'])) {
                         echo "<th>" . $row['username'] . "</th>";
                         echo "<th>" . $row['email'] . "</th>";
                         echo "<th>" . $row['FullName'] . "</th>";
-                        echo "<th>" . '<a class="btn btn-success" href="?do=edit&userID=' . $row['userID'] . '">Edit</a> ' .
-                            '<a onclick="confirmDelete()" class="btn btn-danger confirm" href="?do=delete&userID=' . $row['userID'] . '">delete</a> '
-                            . "</th>";
+                        echo "<th>" . $row['date'] . "</th>";
+                        echo "<th>";
+                        echo    '<a class="btn btn-success" href="?do=edit&userID=' . $row['userID'] . '"><i class="far fa-edit"> </i> Edit</a>';
+                        echo    '   <a onclick="confirmDelete()" class="btn btn-danger confirm" href="?do=delete&userID=' . $row['userID'] . '"><i class="fas fa-user-times"></i> Delete</a>';
+
+                        if ($row['RegStatus'] == 0) {
+                            echo    '   <a class="btn btn-primary  href="?do=manage&page=pending' . $row['userID'] . '"><i class="fas fa-user-check"></i> Activat</a>';
+                        }
+
+                        echo "</th>";
                         echo "</tr>";
                     }
 
@@ -133,19 +147,27 @@ if (isset($_SESSION['username'])) {
 
 
             if (empty($formsError)) {
-                // Insert Into DataBase with this info 
-                $stmt = $conn->prepare('INSERT INTO 
-                                        users(username, password,email,FullName)
-                                        VALUES(:user, :pass, :email, :fullname)');
-                $stmt->execute(array(
 
-                    'user' => $username,
-                    'pass' => $hashpass,
-                    'email' => $email,
-                    'fullname' => $FullName
-                ));
+                // Check If user Existe
+                $check = checkItems("username", "users", $username);
 
-                echo '<div class="text-center alert alert-success" role="alert">' . $stmt->rowCount() . 'Record Inserted' . '</div>';
+                if ($check > 0) {
+                    echo '<div class="text-center alert alert-danger" role="alert">' . 'This Username Already Exicte' . '</div>';
+                } else {
+                    // Insert Into DataBase with this info 
+                    $stmt = $conn->prepare('INSERT INTO 
+                users(username, password,email,FullName,Regstatus,date)
+                VALUES(:user, :pass, :email, :fullname, 1, now())');
+                    $stmt->execute(array(
+
+                        'user' => $username,
+                        'pass' => $hashpass,
+                        'email' => $email,
+                        'fullname' => $FullName,
+                    ));
+
+                    echo '<div class="text-center alert alert-success" role="alert">' . $stmt->rowCount() . 'Record Inserted' . '</div>';
+                }
             }
         } else {
             echo '<div class="text-center alert alert-danger" role="alert"> You Can Not Browse This Page </div>';

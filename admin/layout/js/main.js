@@ -16,9 +16,8 @@ function moseOut() {
 
 
 function confirmDelete() {
-    let deleteBtn = document.querySelector(".confirm");
-    deleteBtn.addEventListener("click", confirmDelete);
     confirm("Are You Sure ?");
 }
 
-
+//let deleteBtn = document.querySelector(".confirm");
+//deleteBtn.addEventListener("click", confirmDelete);
