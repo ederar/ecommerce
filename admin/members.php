@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
             $query = 'AND RegStatus = 0';
         }
 
-         // Select Users From DATABASE 
+        // Select Users From DATABASE 
         $stmt = $conn->prepare("SELECT * FROM users WHERE GroupID != 1 $query");
         $stmt->execute();
         $rows = $stmt->fetchAll();
@@ -49,7 +49,7 @@ if (isset($_SESSION['username'])) {
                         echo    '   <a onclick="confirmDelete()" class="btn btn-danger confirm" href="?do=delete&userID=' . $row['userID'] . '"><i class="fas fa-user-times"></i> Delete</a>';
 
                         if ($row['RegStatus'] == 0) {
-                            echo    '   <a class="btn btn-primary  href="?do=manage&page=pending' . $row['userID'] . '"><i class="fas fa-user-check"></i> Activat</a>';
+                            echo    '   <a class="btn btn-primary"  href="?do=activate&userID=' . $row['userID'] . '"><i class="fas fa-user-check"></i> Activat</a>';
                         }
 
                         echo "</th>";
@@ -285,7 +285,7 @@ if (isset($_SESSION['username'])) {
         echo '<h1 class="text-center"> Delete Members </h1>';
         echo '<div class="container">';
 
-        $userID = $_GET['userID'];
+        $userID = isset($_GET['userID']);
         $stmt = $conn->prepare("DELETE  FROM users WHERE userID = ? ");
         $stmt->execute(array($userID));
         $count = $stmt->rowCount();
@@ -298,6 +298,21 @@ if (isset($_SESSION['username'])) {
 
         // Container End
         echo '</div>';
+    } elseif ($do == 'activate') {
+
+        echo '<h1 class="text-center"> Activate Members </h1>';
+        echo '<div class="container">';
+        $userID = $_GET['userID'];
+        $stmt = $conn->prepare("UPDATE users SET RegStatus = 1 WHERE userID = ?");
+        $stmt->execute(array($userID));
+        $count = $stmt->rowCount();
+        echo $count;
+        if ($count > 0) {
+
+            echo '<div class="alert alert-success" role="alert">
+            The Members Is Activated  !
+            </div>';
+        }
     }
 
 
